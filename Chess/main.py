@@ -35,6 +35,10 @@ class Chess():
         if figure[3:4] == self.chess_board[move[2:4]][3:4]:
             return
 
+        print(figure[5:5])
+        if figure[5:5] == 'W':
+            return
+
         self.chess_board[move[:2]] = '|      '
         self.chess_board[move[2:4]] = figure
 

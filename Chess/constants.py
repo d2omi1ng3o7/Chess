@@ -14,3 +14,4 @@ CHESS_BOARD = {
 
 # colors
 # b - black; w - white
+
