@@ -1,42 +1,48 @@
 from constants import CHESS_BOARD
 
-# generujesz listę ruchem i potem sprawdzasz czy użytkownik podał jakiś ruch z tej listy
 
 class Rook:
     def __init__(self):
-        self.listWithMoves = []
-        self.moveAbovePieces = False
-    
+        pass
 
-    def moveList(self, position='45'): # Do poprawy: dodaj możliwość wybrania dowolnej pozycji, połącz w jedno te same pętle linie i kolumny
+    def moveList(self, position='45', color='w'):
+
+        listWithMoves = []
 
         for x in range(int(position[:1])-1, 1, -1):
-            new_position = f'{x}5'
-            if not(self.moveAbovePieces) and '  ' != CHESS_BOARD[new_position]:
+            new_position = f'{x}{position[1:]}'
+            if '  ' != CHESS_BOARD[new_position]:
+                if color != CHESS_BOARD[new_position][:1]:
+                    listWithMoves.append(new_position)
                 break
-            self.listWithMoves.append(new_position)
+            listWithMoves.append(new_position)
 
         for x in range(int(position[:1])+1, 9):
-            new_position = f'{x}5'
-            if not(self.moveAbovePieces) and '  ' != CHESS_BOARD[new_position]:
+            new_position = f'{x}{position[1:]}'
+            if '  ' != CHESS_BOARD[new_position]:
+                if color != CHESS_BOARD[new_position][:1]:
+                    listWithMoves.append(new_position)
                 break
-            self.listWithMoves.append(new_position)
+            listWithMoves.append(new_position)
 
         for x in range(int(position[1:])-1, 1, -1):
-            new_position = f'4{x}'
-            if not(self.moveAbovePieces) and '  ' != CHESS_BOARD[new_position]:
+            new_position = f'{position[:1]}{x}'
+            if '  ' != CHESS_BOARD[new_position]:
+                if color != CHESS_BOARD[new_position][:1]:
+                    listWithMoves.append(new_position)
                 break
-            self.listWithMoves.append(new_position)
+            listWithMoves.append(new_position)
 
         for x in range(int(position[1:])+1, 9):
-            new_position = f'4{x}'
-            if not(self.moveAbovePieces) and '  ' != CHESS_BOARD[new_position]:
+            new_position = f'{position[1:]}{x}'
+            if '  ' != CHESS_BOARD[new_position]:
+                if color != CHESS_BOARD[new_position][:1]:
+                    listWithMoves.append(new_position)
                 break
-            self.listWithMoves.append(new_position)
+            listWithMoves.append(new_position)
 
-        return self.listWithMoves
+        return listWithMoves
 
 obj = Rook()
 
 obj.moveList()
-print(obj.listWithMoves)
