@@ -9,7 +9,7 @@ class Rook:
 
         listWithMoves = []
 
-        for x in range(int(position[:1])-1, 1, -1):
+        for x in range(int(position[:1])-1, 0, -1):
             new_position = f'{x}{position[1:]}'
             if '  ' != CHESS_BOARD[new_position]:
                 if color != CHESS_BOARD[new_position][:1]:
@@ -25,7 +25,7 @@ class Rook:
                 break
             listWithMoves.append(new_position)
 
-        for x in range(int(position[1:])-1, 1, -1):
+        for x in range(int(position[1:])-1, 0, -1):
             new_position = f'{position[:1]}{x}'
             if '  ' != CHESS_BOARD[new_position]:
                 if color != CHESS_BOARD[new_position][:1]:
@@ -34,7 +34,7 @@ class Rook:
             listWithMoves.append(new_position)
 
         for x in range(int(position[1:])+1, 9):
-            new_position = f'{position[1:]}{x}'
+            new_position = f'{position[:1]}{x}'
             if '  ' != CHESS_BOARD[new_position]:
                 if color != CHESS_BOARD[new_position][:1]:
                     listWithMoves.append(new_position)
