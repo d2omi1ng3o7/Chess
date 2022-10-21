@@ -10,7 +10,7 @@ class Chess():
         print('\n', '---------------------------------------------------------', sep='')
         counter = 1
         for i in self.chess_board:
-            print(self.chess_board[i], end='', sep='')
+            print(f'|  {self.chess_board[i]}  ', end='', sep='')
             if counter == 8:
                 print('|', end='')
                 print('\n', '---------------------------------------------------------', sep='')

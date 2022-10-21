@@ -1,48 +1,35 @@
 from constants import CHESS_BOARD
 
 
-class Rook:
+class Knight:
     def __init__(self):
         pass
 
-    def moveList(self, position='45', color='w'):
+    def moveList(self, position='25', color='w'):
 
         listWithMoves = []
+        to_del = []
 
-        for x in range(int(position[:1])-1, 1, -1):
-            new_position = f'{x}{position[1:]}'
-            if '  ' != CHESS_BOARD[new_position]:
-                if color != CHESS_BOARD[new_position][:1]:
-                    listWithMoves.append(new_position)
-                break
-            listWithMoves.append(new_position)
+        listWithMoves.append(f'{int(position[:1])+1}{int(position[1:])+2}')
+        listWithMoves.append(f'{int(position[:1])+2}{int(position[1:])+1}')
+        listWithMoves.append(f'{int(position[:1])+2}{int(position[1:])-1}')
+        listWithMoves.append(f'{int(position[:1])+1}{int(position[1:])-2}')
+        listWithMoves.append(f'{int(position[:1])-1}{int(position[1:])-2}')
+        listWithMoves.append(f'{int(position[:1])-2}{int(position[1:])-1}')
+        listWithMoves.append(f'{int(position[:1])-2}{int(position[1:])+1}')
+        listWithMoves.append(f'{int(position[:1])-1}{int(position[1:])+2}')
 
-        for x in range(int(position[:1])+1, 9):
-            new_position = f'{x}{position[1:]}'
-            if '  ' != CHESS_BOARD[new_position]:
-                if color != CHESS_BOARD[new_position][:1]:
-                    listWithMoves.append(new_position)
-                break
-            listWithMoves.append(new_position)
+        print(listWithMoves)
+        for x in range(8):
+            if int(listWithMoves[x][:1]) >= 1 and int(listWithMoves[x][1:]) <= 8:
+                if color == CHESS_BOARD[listWithMoves[x]][:1]:
+                    to_del.append(x)
+            else:
+                to_del.append(x)
 
-        for x in range(int(position[1:])-1, 1, -1):
-            new_position = f'{position[:1]}{x}'
-            if '  ' != CHESS_BOARD[new_position]:
-                if color != CHESS_BOARD[new_position][:1]:
-                    listWithMoves.append(new_position)
-                break
-            listWithMoves.append(new_position)
-
-        for x in range(int(position[1:])+1, 9):
-            new_position = f'{position[1:]}{x}'
-            if '  ' != CHESS_BOARD[new_position]:
-                if color != CHESS_BOARD[new_position][:1]:
-                    listWithMoves.append(new_position)
-                break
-            listWithMoves.append(new_position)
-
+        counter = 0
+        for x in range(len(to_del)):
+            listWithMoves.pop(to_del[x-counter])
+            counter += 1
+        
         return listWithMoves
-
-obj = Rook()
-
-obj.moveList()
