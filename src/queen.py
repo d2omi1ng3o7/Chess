@@ -2,7 +2,7 @@ from .constants import CHESS_BOARD
 
 
 
-def moveList(position='45', color='w'):
+def moveList(board, position, color):
 
     listWithMoves = []
 

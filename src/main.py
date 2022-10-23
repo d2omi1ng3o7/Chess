@@ -51,7 +51,7 @@ class Chess():
             elif self.chess_board[move[:2]][1:] == 'S':
                 listMoves = knight(position=move[:2], color='w')
             elif self.chess_board[move[:2]][1:] == 'P':
-                listMoves = pawn(position=move[:2], color='w', lastMove='')
+                listMoves = pawn(board=self.chess_board, position=move[:2], color='w', lastMove='')
             else:
                 listMoves = []
 
