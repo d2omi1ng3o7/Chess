@@ -19,17 +19,14 @@ class Knight:
         listWithMoves.append(f'{int(position[:1])-2}{int(position[1:])+1}')
         listWithMoves.append(f'{int(position[:1])-1}{int(position[1:])+2}')
 
-        print(listWithMoves)
-        for x in range(8):
-            if int(listWithMoves[x][:1]) >= 1 and int(listWithMoves[x][1:]) <= 8:
-                if color == CHESS_BOARD[listWithMoves[x]][:1]:
+        for x in listWithMoves:
+            if int(x[:1]) >= 1 and int(x[1:]) <= 8:
+                if color == CHESS_BOARD[x][:1]:
                     to_del.append(x)
             else:
                 to_del.append(x)
 
-        counter = 0
-        for x in range(len(to_del)):
-            listWithMoves.pop(to_del[x-counter])
-            counter += 1
+        for x in to_del:         
+            listWithMoves.remove(x)
         
         return listWithMoves

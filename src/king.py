@@ -1,48 +1,32 @@
 from constants import CHESS_BOARD
 
 
-class Rook:
+class King:
     def __init__(self):
         pass
 
-    def moveList(self, position='45', color='w'):
+    def moveList(self, position='53', color='w', attacked_fields=['44']):
 
         listWithMoves = []
+        to_del = []
 
-        for x in range(int(position[:1])-1, 1, -1):
-            new_position = f'{x}{position[1:]}'
-            if '  ' != CHESS_BOARD[new_position]:
-                if color != CHESS_BOARD[new_position][:1]:
-                    listWithMoves.append(new_position)
-                break
-            listWithMoves.append(new_position)
+        listWithMoves.append(f'{int(position[:1])}{int(position[1:])+1}')
+        listWithMoves.append(f'{int(position[:1])+1}{int(position[1:])+1}')
+        listWithMoves.append(f'{int(position[:1])+1}{int(position[1:])}')
+        listWithMoves.append(f'{int(position[:1])+1}{int(position[1:])-1}')
+        listWithMoves.append(f'{int(position[:1])}{int(position[1:])-1}')
+        listWithMoves.append(f'{int(position[:1])-1}{int(position[1:])-1}')
+        listWithMoves.append(f'{int(position[:1])-1}{int(position[1:])}')
+        listWithMoves.append(f'{int(position[:1])-1}{int(position[1:])+1}')
 
-        for x in range(int(position[:1])+1, 9):
-            new_position = f'{x}{position[1:]}'
-            if '  ' != CHESS_BOARD[new_position]:
-                if color != CHESS_BOARD[new_position][:1]:
-                    listWithMoves.append(new_position)
-                break
-            listWithMoves.append(new_position)
+        for x in listWithMoves:
+            if int(x[:1]) >= 1 and int(x[1:]) <= 8:
+                if (color == CHESS_BOARD[x][:1]) or (x in attacked_fields):
+                    to_del.append(x)
+            else:
+                to_del.append(x)
 
-        for x in range(int(position[1:])-1, 1, -1):
-            new_position = f'{position[:1]}{x}'
-            if '  ' != CHESS_BOARD[new_position]:
-                if color != CHESS_BOARD[new_position][:1]:
-                    listWithMoves.append(new_position)
-                break
-            listWithMoves.append(new_position)
-
-        for x in range(int(position[1:])+1, 9):
-            new_position = f'{position[1:]}{x}'
-            if '  ' != CHESS_BOARD[new_position]:
-                if color != CHESS_BOARD[new_position][:1]:
-                    listWithMoves.append(new_position)
-                break
-            listWithMoves.append(new_position)
+        for x in to_del:         
+            listWithMoves.remove(x)
 
         return listWithMoves
-
-obj = Rook()
-
-obj.moveList()
