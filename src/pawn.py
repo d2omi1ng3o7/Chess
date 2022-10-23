@@ -1,27 +1,39 @@
 from constants import CHESS_BOARD
 
 
-class Pawn:
+class Pawn: # bicie w przelocie do dodania
     def __init__(self):
         pass
 
-    def moveList(self, position='22', color='w', lastMove='35'):
+    def moveList(self, position='25', color='w', lastMove='bP3735'):
 
         listWithMoves = []
 
-        
-        listWithMoves.append(f'{position[:1]}{int(position[1:])+1}')
-        if (position[1:] == '2' and color =='w') or (position[:1] == '2' and color=='w'):
-            listWithMoves.append(f'{position[:1]}{int(position[1:])+2}')
-       
-        for x in range(int(position[:1])-1, 1, -1):
-            new_position = f'{x}{position[1:]}'
-            if '  ' != CHESS_BOARD[new_position]:
-                if color != CHESS_BOARD[new_position][:1]:
-                    listWithMoves.append(new_position)
-                break
-            listWithMoves.append(new_position)
+        if CHESS_BOARD[f'{position[:1]}{int(position[1:])+1}'] == '  ' and color == 'w':
+            listWithMoves.append(f'{position[:1]}{int(position[1:])+1}')
+            if CHESS_BOARD[f'{position[:1]}{int(position[1:])+2}'] == '  ':    
+                if position[1:] == '2':
+                    listWithMoves.append(f'{position[:1]}{int(position[1:])+2}')
 
+        if CHESS_BOARD[f'{int(position[:1])+1}{int(position[1:])+1}'][:1] == 'b' and color == 'w':
+            listWithMoves.append(f'{int(position[:1])+1}{int(position[1:])+1}')
+        if CHESS_BOARD[f'{int(position[:1])-1}{int(position[1:])+1}'][:1] == 'b' and color == 'w':
+            listWithMoves.append(f'{int(position[:1])-1}{int(position[1:])+1}')
+
+        # if position[1:] == '5' and color == 'w' and lastMove[:2] == 'bP':
+        #     if (lastMove[2:3] == f'{int(position[1:]+1)}' or lastMove[2:3] == f'{int(position[1:]+1)}')
+        #         listWithMoves.append(f'{int(position[:1])+1}{int(position[1:])+1}')
+
+        if CHESS_BOARD[f'{position[:1]}{int(position[1:])-1}'] == '  ' and color == 'b':
+            listWithMoves.append(f'{position[:1]}{int(position[1:])-1}')
+            if CHESS_BOARD[f'{position[:1]}{int(position[1:])-2}'] == '  ':    
+                if position[1:] == '7':
+                    listWithMoves.append(f'{position[:1]}{int(position[1:])-2}')
+
+        if CHESS_BOARD[f'{int(position[:1])+1}{int(position[1:])-1}'][:1] == 'b' and color == 'b':
+            listWithMoves.append(f'{int(position[:1])+1}{int(position[1:])-1}')
+        if CHESS_BOARD[f'{int(position[:1])-1}{int(position[1:])-1}'][:1] == 'b' and color == 'b':
+            listWithMoves.append(f'{int(position[:1])-1}{int(position[1:])-1}')
 
         return listWithMoves
 
