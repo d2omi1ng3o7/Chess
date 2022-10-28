@@ -1,41 +1,38 @@
-from .constants import CHESS_BOARD
-
-
 
 def moveList(board, position, color):
 
-    listWithMoves = []
+    listMoves = []
 
     for x in range(1, max(8-int(position[:1]), int(position[1:])-1)+1):
         new_position = f'{str(int(position[:1])-x)}{str(int(position[1:])+x)}'
-        if '  ' != CHESS_BOARD[new_position]:
-            if color != CHESS_BOARD[new_position][:1]:
-                listWithMoves.append(new_position)
+        if '  ' != board[new_position]:
+            if color != board[new_position][:1]:
+                listMoves.append(new_position)
             break
-        listWithMoves.append(new_position)
+        listMoves.append(new_position)
 
     for x in range(1, max(8-int(position[:1]), 8-int(position[1:]))+1):
         new_position = f'{str(int(position[:1])+x)}{str(int(position[1:])+x)}'
-        if '  ' != CHESS_BOARD[new_position]:
-            if color != CHESS_BOARD[new_position][:1]:
-                listWithMoves.append(new_position)
+        if '  ' != board[new_position]:
+            if color != board[new_position][:1]:
+                listMoves.append(new_position)
             break
-        listWithMoves.append(new_position)
+        listMoves.append(new_position)
 
     for x in range(1, max(int(position[:1])-1, 8-int(position[1:]))+1):
         new_position = f'{str(int(position[:1])+x)}{str(int(position[1:])-x)}'
-        if '  ' != CHESS_BOARD[new_position]:
-            if color != CHESS_BOARD[new_position][:1]:
-                listWithMoves.append(new_position)
+        if '  ' != board[new_position]:
+            if color != board[new_position][:1]:
+                listMoves.append(new_position)
             break
-        listWithMoves.append(new_position)
+        listMoves.append(new_position)
 
     for x in range(1, max(int(position[:1])-1, int(position[1:])-1)+1):
         new_position = f'{str(int(position[:1])-x)}{str(int(position[1:])-x)}'
-        if '  ' != CHESS_BOARD[new_position]:
-            if color != CHESS_BOARD[new_position][:1]:
-                listWithMoves.append(new_position)
+        if '  ' != board[new_position]:
+            if color != board[new_position][:1]:
+                listMoves.append(new_position)
             break
-        listWithMoves.append(new_position)
+        listMoves.append(new_position)
 
-    return listWithMoves
+    return listMoves

@@ -36,7 +36,7 @@ class Chess():
         if self.whose_move:
             if color != 'w': return
         else:
-            if color != 'b': return 
+            if color != 'b': return
             
         match self.chess_board[move[:2]][1:]:
             case 'K': listMoves = king(board=self.chess_board, position=move[:2], color=color, attacked_fields=[])
@@ -51,6 +51,6 @@ class Chess():
             self.chess_board[move[2:4]] = self.chess_board[move[:2]]
             self.chess_board[move[:2]] = '  '
         else: return
-        
+
         if self.whose_move: self.whose_move = False 
         else: self.whose_move = True

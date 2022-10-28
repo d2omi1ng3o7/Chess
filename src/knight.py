@@ -1,29 +1,26 @@
-from .constants import CHESS_BOARD
-
-
 
 def moveList(board, position, color):
 
-    listWithMoves = []
+    listMoves = []
     to_del = []
 
-    listWithMoves.append(f'{int(position[:1])+1}{int(position[1:])+2}')
-    listWithMoves.append(f'{int(position[:1])+2}{int(position[1:])+1}')
-    listWithMoves.append(f'{int(position[:1])+2}{int(position[1:])-1}')
-    listWithMoves.append(f'{int(position[:1])+1}{int(position[1:])-2}')
-    listWithMoves.append(f'{int(position[:1])-1}{int(position[1:])-2}')
-    listWithMoves.append(f'{int(position[:1])-2}{int(position[1:])-1}')
-    listWithMoves.append(f'{int(position[:1])-2}{int(position[1:])+1}')
-    listWithMoves.append(f'{int(position[:1])-1}{int(position[1:])+2}')
+    listMoves.append(f'{int(position[:1])+1}{int(position[1:])+2}')
+    listMoves.append(f'{int(position[:1])+2}{int(position[1:])+1}')
+    listMoves.append(f'{int(position[:1])+2}{int(position[1:])-1}')
+    listMoves.append(f'{int(position[:1])+1}{int(position[1:])-2}')
+    listMoves.append(f'{int(position[:1])-1}{int(position[1:])-2}')
+    listMoves.append(f'{int(position[:1])-2}{int(position[1:])-1}')
+    listMoves.append(f'{int(position[:1])-2}{int(position[1:])+1}')
+    listMoves.append(f'{int(position[:1])-1}{int(position[1:])+2}')
 
-    for x in listWithMoves:
+    for x in listMoves:
         if int(x[:1]) >= 1 and int(x[1:]) <= 8:
-            if color == CHESS_BOARD[x][:1]:
+            if color == board[x][:1]:
                 to_del.append(x)
         else:
             to_del.append(x)
 
     for x in to_del:         
-        listWithMoves.remove(x)
+        listMoves.remove(x)
         
-    return listWithMoves
+    return listMoves
