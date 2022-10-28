@@ -15,7 +15,20 @@ class Chess():
         self.whose_move = True # True - white False - black
 
     def printChessBoard(self):
-        print('\n', '---------------------------------------------------------', sep='')
+
+        print(
+f"""
+
+X - kolumna Y - wiersz (Podawać tylko liczby!)
+Podaj kordynaty figury którą chcesz ruszyć, 
+a następne bez odstępu kordynaty pola na którze chcesz ruszyć.
+
+                            XYXY
+
+Ruch {'białych' if self.whose_move else 'czarnych'}.
+""")
+
+        print('---------------------------------------------------------')
         counter = 1
         for i in self.chess_board:
             print(f'|  {self.chess_board[i]}  ', end='', sep='')
@@ -38,6 +51,7 @@ class Chess():
         else:
             if color != 'b': return
             
+        print(self.chess_board[move[:2]][1:])
         match self.chess_board[move[:2]][1:]:
             case 'K': listMoves = king(board=self.chess_board, position=move[:2], color=color, attacked_fields=[])
             case 'Q': listMoves = queen(board=self.chess_board, position=move[:2], color=color)
@@ -46,6 +60,10 @@ class Chess():
             case 'S': listMoves = knight(board=self.chess_board, position=move[:2], color=color)
             case 'P': listMoves = pawn(board=self.chess_board, position=move[:2], color=color, lastMove='')
             case other: listMoves = []
+
+        print(listMoves)
+
+        print(move[2:4])
 
         if move[2:4] in listMoves:
             self.chess_board[move[2:4]] = self.chess_board[move[:2]]

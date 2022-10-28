@@ -1,5 +1,5 @@
 
-def moveList(board, position, move, color):
+def moveList(board, position, color):
     
     listMoves = []
 
