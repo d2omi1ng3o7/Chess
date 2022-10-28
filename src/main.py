@@ -23,67 +23,34 @@ class Chess():
                 print('|', end='')
                 print('\n', '---------------------------------------------------------', sep='')
                 counter = 1
-            else:
-                counter += 1
+            else: counter += 1
         print()
     
     def clear_screen(self):
-        if os.name == 'nt':
-            os.system('cls')
-        else:
-            os.system('clear')
+        os.system('cls') if os.name == 'nt' else os.system('clear')
 
     def move(self):
-        listMoves = []
+        move = input()
+        color = self.chess_board[move[:2]][:1]
 
         if self.whose_move:
-            move = input()
-
-            if self.chess_board[move[:2]][:1] != 'w': return
-
-            if self.chess_board[move[:2]][1:] == 'K':
-                listMoves = king(board=self.chess_board, position=move[:2], color='w', attacked_fields=[])
-            elif self.chess_board[move[:2]][1:] == 'Q':
-                listMoves = queen(board=self.chess_board, position=move[:2], color='w')
-            elif self.chess_board[move[:2]][1:] == 'R':
-                listMoves = rook(board=self.chess_board, position=move[:2], color='w')
-            elif self.chess_board[move[:2]][1:] == 'B':
-                listMoves = bishop(board=self.chess_board, position=move[:2], color='w')
-            elif self.chess_board[move[:2]][1:] == 'S':
-                listMoves = knight(board=self.chess_board, position=move[:2], color='w')
-            elif self.chess_board[move[:2]][1:] == 'P':
-                listMoves = pawn(board=self.chess_board, position=move[:2], color='w', lastMove='')
-            else:
-                listMoves = []
-
-            if move[2:4] in listMoves:
-                self.chess_board[move[2:4]] = self.chess_board[move[:2]]
-                self.chess_board[move[:2]] = '  '
-            else: return
-
-            self.whose_move = False
-       
+            if color != 'w': return
         else:
-            move = input()
+            if color != 'b': return 
+            
+        match self.chess_board[move[:2]][1:]:
+            case 'K': listMoves = king(board=self.chess_board, position=move[:2], color=color, attacked_fields=[])
+            case 'Q': listMoves = queen(board=self.chess_board, position=move[:2], color=color)
+            case 'R': listMoves = rook(board=self.chess_board, position=move[:2], color=color)
+            case 'B': listMoves = bishop(board=self.chess_board, position=move[:2], color=color)
+            case 'S': listMoves = knight(board=self.chess_board, position=move[:2], color=color)
+            case 'P': listMoves = pawn(board=self.chess_board, position=move[:2], color=color, lastMove='')
+            case other: listMoves = []
 
-            if self.chess_board[move[:2]][:1] != 'b': return
-
-            if self.chess_board[move[:2]][1:] == 'K':
-                listMoves = king(board=self.chess_board, position=move[:2], color='b', attacked_fields=[])
-            elif self.chess_board[move[:2]][1:] == 'Q':
-                listMoves = queen(board=self.chess_board, position=move[:2], color='b')
-            elif self.chess_board[move[:2]][1:] == 'R':
-                listMoves = rook(board=self.chess_board, position=move[:2], color='b')
-            elif self.chess_board[move[:2]][1:] == 'B':
-                listMoves = bishop(board=self.chess_board, position=move[:2], color='b')
-            elif self.chess_board[move[:2]][1:] == 'S':
-                listMoves = knight(board=self.chess_board, position=move[:2], color='b')
-            elif self.chess_board[move[:2]][1:] == 'P':
-                listMoves = pawn(board=self.chess_board, position=move[:2], color='b', lastMove='')
-
-            if move[2:4] in listMoves:
-                self.chess_board[move[2:4]] = self.chess_board[move[:2]]
-                self.chess_board[move[:2]] = '  '
-            else: return      
-
-            self.whose_move = True
+        if move[2:4] in listMoves:
+            self.chess_board[move[2:4]] = self.chess_board[move[:2]]
+            self.chess_board[move[:2]] = '  '
+        else: return
+        
+        if self.whose_move: self.whose_move = False 
+        else: self.whose_move = True
