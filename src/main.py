@@ -33,7 +33,8 @@ class Chess():
         else:
             os.system('clear')
 
-    def move(self):   
+    def move(self):
+        listMoves = []
 
         if self.whose_move:
             move = input()
@@ -41,15 +42,15 @@ class Chess():
             if self.chess_board[move[:2]][:1] != 'w': return
 
             if self.chess_board[move[:2]][1:] == 'K':
-                listMoves = king(position=move[:2], color='w', attacked_fields=[])
+                listMoves = king(board=self.chess_board, position=move[:2], color='w', attacked_fields=[])
             elif self.chess_board[move[:2]][1:] == 'Q':
-                listMoves = queen(position=move[:2], color='w')
+                listMoves = queen(board=self.chess_board, position=move[:2], color='w')
             elif self.chess_board[move[:2]][1:] == 'R':
-                listMoves = rook(position=move[:2], color='w')
+                listMoves = rook(board=self.chess_board, position=move[:2], color='w')
             elif self.chess_board[move[:2]][1:] == 'B':
-                listMoves = bishop(position=move[:2], color='w')
+                listMoves = bishop(board=self.chess_board, position=move[:2], color='w')
             elif self.chess_board[move[:2]][1:] == 'S':
-                listMoves = knight(position=move[:2], color='w')
+                listMoves = knight(board=self.chess_board, position=move[:2], color='w')
             elif self.chess_board[move[:2]][1:] == 'P':
                 listMoves = pawn(board=self.chess_board, position=move[:2], color='w', lastMove='')
             else:
@@ -68,17 +69,17 @@ class Chess():
             if self.chess_board[move[:2]][:1] != 'b': return
 
             if self.chess_board[move[:2]][1:] == 'K':
-                listMoves = king(position=move[:2], color='b', attacked_fields=[])
+                listMoves = king(board=self.chess_board, position=move[:2], color='b', attacked_fields=[])
             elif self.chess_board[move[:2]][1:] == 'Q':
-                listMoves = queen(position=move[:2], color='b')
+                listMoves = queen(board=self.chess_board, position=move[:2], color='b')
             elif self.chess_board[move[:2]][1:] == 'R':
-                listMoves = rook(position=move[:2], color='b')
+                listMoves = rook(board=self.chess_board, position=move[:2], color='b')
             elif self.chess_board[move[:2]][1:] == 'B':
-                listMoves = bishop(position=move[:2], color='b')
+                listMoves = bishop(board=self.chess_board, position=move[:2], color='b')
             elif self.chess_board[move[:2]][1:] == 'S':
-                listMoves = knight(position=move[:2], color='b')
+                listMoves = knight(board=self.chess_board, position=move[:2], color='b')
             elif self.chess_board[move[:2]][1:] == 'P':
-                listMoves = pawn(position=move[:2], color='b', lastMove='')
+                listMoves = pawn(board=self.chess_board, position=move[:2], color='b', lastMove='')
 
             if move[2:4] in listMoves:
                 self.chess_board[move[2:4]] = self.chess_board[move[:2]]
