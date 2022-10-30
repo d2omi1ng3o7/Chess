@@ -2,69 +2,20 @@
 def moveList(board, position, color):
 
     listMoves = []
+    moves = (0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, -1), (-1, 1)
 
-    for x in range(int(position[:1])-1, 0, -1):
-        new_position = f'{x}{position[1:]}'
-        if '  ' != board[new_position]:
-            if color != board[new_position][:1]:
-                listMoves.append(new_position)
-            break
-        listMoves.append(new_position)
-
-    for x in range(int(position[:1])+1, 9):
-        new_position = f'{x}{position[1:]}'
-        if '  ' != board[new_position]:
-            if color != board[new_position][:1]:
-                listMoves.append(new_position)
-            break
-        listMoves.append(new_position)
-
-    for x in range(int(position[1:])-1, 0, -1):
-        new_position = f'{position[:1]}{x}'
-        if '  ' != board[new_position]:
-            if color != board[new_position][:1]:
-                listMoves.append(new_position)
-            break
-        listMoves.append(new_position)
-
-    for x in range(int(position[1:])+1, 9):
-        new_position = f'{position[:1]}{x}'
-        if '  ' != board[new_position]:
-            if color != board[new_position][:1]:
-                listMoves.append(new_position)
-            break
-        listMoves.append(new_position)
-
-    for x in range(1, max(8-int(position[:1]), int(position[1:])-1)+1):
-        new_position = f'{str(int(position[:1])-x)}{str(int(position[1:])+x)}'
-        if '  ' != board[new_position]:
-            if color != board[new_position][:1]:
-                listMoves.append(new_position)
-            break
-        listMoves.append(new_position)
-
-    for x in range(1, max(8-int(position[:1]), 8-int(position[1:]))+1):
-        new_position = f'{str(int(position[:1])+x)}{str(int(position[1:])+x)}'
-        if '  ' != board[new_position]:
-            if color != board[new_position][:1]:
-                listMoves.append(new_position)
-            break
-        listMoves.append(new_position)
-
-    for x in range(1, max(int(position[:1])-1, 8-int(position[1:]))+1):
-        new_position = f'{str(int(position[:1])+x)}{str(int(position[1:])-x)}'
-        if '  ' != board[new_position]:
-            if color != board[new_position][:1]:
-                listMoves.append(new_position)
-            break
-        listMoves.append(new_position)
-
-    for x in range(1, max(int(position[:1])-1, int(position[1:])-1)+1):
-        new_position = f'{str(int(position[:1])-x)}{str(int(position[1:])-x)}'
-        if '  ' != board[new_position]:
-            if color != board[new_position][:1]:
-                listMoves.append(new_position)
-            break
-        listMoves.append(new_position)
+    for move in moves:
+        counter = 0
+        while True:
+            newPosition = f'{int(position[:1]) + move[0] + counter * move[0]}{int(position[1:]) + move[1] + counter * move[1]}'
+            if int(newPosition[:1]) < 1 or int(newPosition[:1]) > 8 or int(newPosition[1:]) < 1 or int(newPosition[1:]) > 8: break
+            if board[newPosition] != '  ':
+                if color != board[newPosition][:1]:
+                    listMoves.append(newPosition)
+                    break
+                else: break
+            else: 
+                listMoves.append(newPosition)
+                counter += 1
 
     return listMoves

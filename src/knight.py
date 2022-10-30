@@ -13,8 +13,11 @@ def moveList(board, position, color):
     listMoves.append(f'{int(position[:1])-2}{int(position[1:])+1}')
     listMoves.append(f'{int(position[:1])-1}{int(position[1:])+2}')
 
+    print(listMoves)
+
     for x in listMoves:
-        if int(x[:1]) >= 1 and int(x[1:]) <= 8:
+        if int(x[1:]) >= 1 and int(x[1:]) <= 8 and int(x[:1]) >= 1 and int(x[:1]) <= 8:
+            print(board[x][:1])
             if color == board[x][:1]:
                 to_del.append(x)
         else:
