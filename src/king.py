@@ -2,25 +2,17 @@
 def moveList(board, position, color, attacked_fields):
 
     listMoves = []
-    to_del = []
+    moves = (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)
 
-    listMoves.append(f'{int(position[:1])}{int(position[1:])+1}')
-    listMoves.append(f'{int(position[:1])+1}{int(position[1:])+1}')
-    listMoves.append(f'{int(position[:1])+1}{int(position[1:])}')
-    listMoves.append(f'{int(position[:1])+1}{int(position[1:])-1}')
-    listMoves.append(f'{int(position[:1])}{int(position[1:])-1}')
-    listMoves.append(f'{int(position[:1])-1}{int(position[1:])-1}')
-    listMoves.append(f'{int(position[:1])-1}{int(position[1:])}')
-    listMoves.append(f'{int(position[:1])-1}{int(position[1:])+1}')
-
-    for x in listMoves:
-        if int(x[:1]) >= 1 and int(x[1:]) <= 8:
-            if (color == board[x][:1]) or (x in attacked_fields):
-                to_del.append(x)
-        else:
-            to_del.append(x)
-
-    for x in to_del:         
-        listMoves.remove(x)
+    for move in moves:
+        newPosition = f'{int(position[:1]) + move[0]}{int(position[1:]) + move[1]}'
+        if int(newPosition[:1]) < 1 or int(newPosition[:1]) > 8 or int(newPosition[1:]) < 1 or int(newPosition[1:]) > 8: continue
+        if board[newPosition] != '  ':
+            if color != board[newPosition][:1] or newPosition not in attacked_fields:
+                listMoves.append(newPosition)
+                continue
+            else: continue
+        else: 
+            listMoves.append(newPosition)
 
     return listMoves
