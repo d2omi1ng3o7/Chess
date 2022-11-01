@@ -1,9 +1,10 @@
-from src.main import Chess
+from src.main import ChessGame
+from src.constants import CHESS_BOARD
 
 if __name__ == '__main__':
-    game = Chess()
+    game = ChessGame(CHESS_BOARD)
     while True:
-        # game.clear_screen()
+        # game.clearScreen()
         game.printChessBoard()
         game.move()
 
