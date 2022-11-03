@@ -3,10 +3,10 @@ from src.constants import CHESS_BOARD
 
 if __name__ == '__main__':
     game = ChessGame(CHESS_BOARD)
-    while True:
+    # while True:
         # game.clearScreen()
-        game.printChessBoard()
-        game.move()
+    game.printChessBoard()
+    print(game.getMoves())
 
 
 # skoczki, gońce, wierze, hetmany, piony chyba działają już w pełni
