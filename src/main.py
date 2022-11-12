@@ -7,17 +7,15 @@ from .knight import moveList as knight
 from .pawn import moveList as pawn
 
 
-
 class ChessGame():
     def __init__(self, board):
         self.board = board
-        self.whose_move = True # True - white False - black
+        self.whose_move = True  # True - white False - black
         self.isCheck = False
         self.isCheckmate = False
         self.isDraw = False
         self.whoWin = ('white', 'black', '')
         self.lastMove = ''
-
 
     def printChessBoard(self):
 
@@ -25,7 +23,7 @@ class ChessGame():
 f"""
 
 X - kolumna Y - wiersz (Podawać tylko liczby!)
-Podaj kordynaty figury którą chcesz ruszyć, 
+Podaj kordynaty figury którą chcesz ruszyć,
 a następne bez odstępu kordynaty pola na którze chcesz ruszyć.
 
                             XYXY
@@ -47,7 +45,7 @@ Ruch {'białych' if self.whose_move else 'czarnych'}.
     def clearScreen(self):
         os.system('cls') if os.name == 'nt' else os.system('clear')
 
-    def getMoves(self): # dodać dowanie pozycji w tych wszystkich funkcjach z ruchami
+    def getMoves(self):  # dodać dowanie pozycji w tych wszystkich funkcjach z ruchami
         listAllMoves = []
         attachedFields = []
 
@@ -97,7 +95,8 @@ Ruch {'białych' if self.whose_move else 'czarnych'}.
             listAllMoves.append(f'{position}{x}')
 
         if kingPosition in attachedFields:
-            print('sdfsdfsdfsdf')
+
+            print(attachedFields)
             for x in listAllMoves:
                 if kingPosition != x[:2]:
                     listAllMoves.remove(x)
