@@ -5,17 +5,18 @@ from .rook import moveList as rook
 from .bishop import moveList as bishop
 from .knight import moveList as knight
 from .pawn import moveList as pawn
+from .check import check
 
 
 class ChessGame():
     def __init__(self, board):
         self.board = board
-        self.whose_move = True  # True - white False - black
+        self.whoseMove = True  # True - white False - black
         self.isCheck = False
         self.isCheckmate = False
-        self.isDraw = False
-        self.whoWin = ('white', 'black', '')
         self.lastMove = ''
+        self.whiteKingPosition = '51'
+        self.blackKingPosition = '58'
 
     def printChessBoard(self):
 
@@ -45,7 +46,7 @@ Ruch {'białych' if self.whose_move else 'czarnych'}.
     def clearScreen(self):
         os.system('cls') if os.name == 'nt' else os.system('clear')
 
-    def getMoves(self):  # dodać dowanie pozycji w tych wszystkich funkcjach z ruchami
+    def getMoves(self):
         listAllMoves = []
         attachedFields = []
 
@@ -55,51 +56,82 @@ Ruch {'białych' if self.whose_move else 'czarnych'}.
                 color = self.board[position][:1]
                 piece = self.board[position][1:]
 
-                if self.board[position] == '  ':
-                    continue
-                
+
                 match piece:
+                    case ' ':
+                        continue
                     case 'K':
-                        if self.whose_move:
-                            c = 'w'
-                        else: 
-                            c = 'b'
-                        if color == c:
-                            kingPosition = position
+                        continue
+                    case 'Q': 
+                        listMoves = queen(self.board, position, color)
+                        if self.whoseMove:
+                            if color == 'w':
+                                listAllMoves.append(listMoves)
+                            else:
+                                attachedFields.append(listMoves)
                         else:
-                            listMoves = king(self.board, position, color, [])
-                    case 'Q': listMoves = queen(self.board, position, color)
-                    case 'R': listMoves = rook(self.board, position, color)
-                    case 'B': listMoves = bishop(self.board, position, color)
-                    case 'S': listMoves = knight(self.board, position, color)
-                    case 'P': listMoves = pawn(self.board, position, color, self.lastMove)
-                    case other: listMoves = []
+                            if color == 'b':
+                                listAllMoves.append(listMoves)
+                            else:
+                                attachedFields.append(listMoves)
 
-                if self.whose_move:
-                    if color == 'w':
-                        for x in listMoves:
-                            listAllMoves.append(f'{position}{x}')
-                    else:
-                        for x in listMoves:
-                            attachedFields.append(x)
-                else:
-                    if color == 'b':
-                        for x in listMoves:
-                            listAllMoves.append(f'{position}{x}')
-                    else:
-                        for x in listMoves:
-                            attachedFields.append(x)
+                    case 'R': 
+                        listMoves = rook(self.board, position, color)
+                        if self.whoseMove:
+                            if color == 'w':
+                                listAllMoves.append(listMoves)
+                            else:
+                                attachedFields.append(listMoves)
+                        else:
+                            if color == 'b':
+                                listAllMoves.append(listMoves)
+                            else:
+                                attachedFields.append(listMoves)
+                    case 'B': 
+                        listMoves = bishop(self.board, position, color)
+                        if self.whoseMove:
+                            if color == 'w':
+                                listAllMoves.append(listMoves)
+                            else:
+                                attachedFields.append(listMoves)
+                        else:
+                            if color == 'b':
+                                listAllMoves.append(listMoves)
+                            else:
+                                attachedFields.append(listMoves)
+                    case 'S': 
+                        listMoves = knight(self.board, position, color)
+                        if self.whoseMove:
+                            if color == 'w':
+                                listAllMoves.append(listMoves)
+                            else:
+                                attachedFields.append(listMoves)
+                        else:
+                            if color == 'b':
+                                listAllMoves.append(listMoves)
+                            else:
+                                attachedFields.append(listMoves)
+                    case 'P':
+                        continue # popraw pawn.py by było osobno szukanie atakowanych pól i możliwego ruszania się i potem uwzględnij to tu
+
+        for x in attachedFields:
+            for i in x:
+                if i[2:] == (self.whiteKingPosition if self.whoseMove else self.blackKingPosition):
+                    self.isCheck = True
+
+        if self.isCheck:
+            listAllMoves = check(listAllMoves, attachedFields)
+
+        bool = True       # czy mat
+        for x in listAllMoves:
+            if x != []:
+                bool = False
+
+        if bool:
+            self.isCheckmate = True
         
-        listMoves = king(self.board, kingPosition, color, attachedFields)
-        for x in listMoves:
-            listAllMoves.append(f'{position}{x}')
 
-        if kingPosition in attachedFields:
-
-            print(attachedFields)
-            for x in listAllMoves:
-                if kingPosition != x[:2]:
-                    listAllMoves.remove(x)
+        self.isCheck = False
 
         return listAllMoves
 
@@ -112,24 +144,14 @@ Ruch {'białych' if self.whose_move else 'czarnych'}.
         else:
             if color != 'b': return
         
-        if not self.isCheck:
-            match self.board[move[:2]][1:]:
-                case 'K': listMoves = king(board=self.board, position=move[:2], color=color, attacked_fields=[])
-                case 'Q': listMoves = queen(board=self.board, position=move[:2], color=color)
-                case 'R': listMoves = rook(board=self.board, position=move[:2], color=color)
-                case 'B': listMoves = bishop(board=self.board, position=move[:2], color=color)
-                case 'S': listMoves = knight(board=self.board, position=move[:2], color=color)
-                case 'P': listMoves = pawn(board=self.board, position=move[:2], color=color, lastMove='')
-                case other: listMoves = []
+        for x in listAllMoves:
+            if move in x:
+                self.board[move[2:4]] = self.board[move[:2]]
+                self.board[move[:2]] = '  '
+            else:
+                return
+
+        if self.whose_move:
+            self.whose_move = False 
         else:
-            listMoves = king(board=self.board, position=move[:2], color=color, attacked_fields=[])
-            if listMoves == []:
-                pass
-
-        if move[2:4] in listMoves:
-            self.board[move[2:4]] = self.board[move[:2]]
-            self.board[move[:2]] = '  '
-        else: return
-
-        if self.whose_move: self.whose_move = False 
-        else: self.whose_move = True
+            self.whose_move = True

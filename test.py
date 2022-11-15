@@ -1,4 +1,4 @@
-dd = 'ww'
-bb = '11'
+l = ['sdfd', '1111', 'hhhh']
 
-print('w' not in dd)
+for x in l[:][:1]:
+    print(x)

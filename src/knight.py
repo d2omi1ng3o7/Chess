@@ -9,10 +9,10 @@ def moveList(board, position, color):
         if int(newPosition[:1]) < 1 or int(newPosition[:1]) > 8 or int(newPosition[1:]) < 1 or int(newPosition[1:]) > 8: continue
         if board[newPosition] != '  ':
             if color != board[newPosition][:1]:
-                listMoves.append(newPosition)
+                listMoves.append(f'{position}{newPosition}')
                 continue
             else: continue
         else: 
-            listMoves.append(newPosition)
+            listMoves.append(f'{position}{newPosition}')
 
     return listMoves
