@@ -1,5 +1,5 @@
 
-def moveList(board, position, color, attacked_fields):
+def moveList(board, position, color, attacked_fields=[]):
 
     listMoves = []
     moves = (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)
@@ -9,10 +9,10 @@ def moveList(board, position, color, attacked_fields):
         if int(newPosition[:1]) < 1 or int(newPosition[:1]) > 8 or int(newPosition[1:]) < 1 or int(newPosition[1:]) > 8: continue
         if board[newPosition] != '  ':
             if color != board[newPosition][:1] or newPosition not in attacked_fields:
-                listMoves.append(newPosition)
+                listMoves.append(f'{position}{newPosition}')
                 continue
             else: continue
         else: 
-            listMoves.append(newPosition)
+            listMoves.append(f'{position}{newPosition}')
 
     return listMoves

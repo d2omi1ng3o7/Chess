@@ -29,7 +29,7 @@ a następne bez odstępu kordynaty pola na którze chcesz ruszyć.
 
                             XYXY
 
-Ruch {'białych' if self.whose_move else 'czarnych'}.
+Ruch {'białych' if self.whoseMove else 'czarnych'}.
 """)
 
         print('---------------------------------------------------------')
@@ -45,6 +45,10 @@ Ruch {'białych' if self.whose_move else 'czarnych'}.
     
     def clearScreen(self):
         os.system('cls') if os.name == 'nt' else os.system('clear')
+
+    def convert(self, listMove, list):
+        for move in listMove:
+            list.append(move)
 
     def getMoves(self):
         listAllMoves = []
@@ -66,58 +70,60 @@ Ruch {'białych' if self.whose_move else 'czarnych'}.
                         listMoves = queen(self.board, position, color)
                         if self.whoseMove:
                             if color == 'w':
-                                listAllMoves.append(listMoves)
+                                self.convert(listMoves, listAllMoves)
                             else:
-                                attachedFields.append(listMoves)
+                                self.convert(listMoves, attachedFields)
                         else:
                             if color == 'b':
-                                listAllMoves.append(listMoves)
+                                self.convert(listMoves, listAllMoves)
                             else:
-                                attachedFields.append(listMoves)
+                                self.convert(listMoves, attachedFields)
 
                     case 'R': 
                         listMoves = rook(self.board, position, color)
                         if self.whoseMove:
                             if color == 'w':
-                                listAllMoves.append(listMoves)
+                                self.convert(listMoves, listAllMoves)
                             else:
-                                attachedFields.append(listMoves)
+                                self.convert(listMoves, attachedFields)
                         else:
                             if color == 'b':
-                                listAllMoves.append(listMoves)
+                                self.convert(listMoves, listAllMoves)
                             else:
-                                attachedFields.append(listMoves)
+                                self.convert(listMoves, attachedFields)
                     case 'B': 
                         listMoves = bishop(self.board, position, color)
                         if self.whoseMove:
                             if color == 'w':
-                                listAllMoves.append(listMoves)
+                                self.convert(listMoves, listAllMoves)
                             else:
-                                attachedFields.append(listMoves)
+                                self.convert(listMoves, attachedFields)
                         else:
                             if color == 'b':
-                                listAllMoves.append(listMoves)
+                                self.convert(listMoves, listAllMoves)
                             else:
-                                attachedFields.append(listMoves)
+                                self.convert(listMoves, attachedFields)
                     case 'S': 
                         listMoves = knight(self.board, position, color)
                         if self.whoseMove:
                             if color == 'w':
-                                listAllMoves.append(listMoves)
+                                self.convert(listMoves, listAllMoves)
                             else:
-                                attachedFields.append(listMoves)
+                                self.convert(listMoves, attachedFields)
                         else:
                             if color == 'b':
-                                listAllMoves.append(listMoves)
+                                self.convert(listMoves, listAllMoves)
                             else:
-                                attachedFields.append(listMoves)
+                                self.convert(listMoves, attachedFields)
                     case 'P':
                         continue # popraw pawn.py by było osobno szukanie atakowanych pól i możliwego ruszania się i potem uwzględnij to tu
 
-        for x in attachedFields:
-            for i in x:
-                if i[2:] == (self.whiteKingPosition if self.whoseMove else self.blackKingPosition):
-                    self.isCheck = True
+        self.convert(king(self.board, (self.blackKingPosition if self.whoseMove else self.whiteKingPosition), ('b' if self.whoseMove else 'w')), attachedFields)
+        self.convert(king(self.board, (self.whiteKingPosition if self.whoseMove else self.blackKingPosition), ('w' if self.whoseMove else 'b'), attachedFields), listAllMoves)
+
+        for i in attachedFields:
+            if i[2:] == (self.whiteKingPosition if self.whoseMove else self.blackKingPosition):
+                self.isCheck = True
 
         if self.isCheck:
             listAllMoves = check(listAllMoves, attachedFields)
@@ -136,10 +142,13 @@ Ruch {'białych' if self.whose_move else 'czarnych'}.
         return listAllMoves
 
     def move(self, listAllMoves):
+        if self.isCheckmate:
+            return f'Wygrał {self.whose_move}'
+
         move = input()
         color = self.board[move[:2]][:1]
 
-        if self.whose_move:
+        if self.whoseMove:
             if color != 'w': return
         else:
             if color != 'b': return
@@ -151,7 +160,7 @@ Ruch {'białych' if self.whose_move else 'czarnych'}.
             else:
                 return
 
-        if self.whose_move:
-            self.whose_move = False 
+        if self.whoseMove:
+            self.whoseMove = False 
         else:
-            self.whose_move = True
+            self.whoseMove = True
